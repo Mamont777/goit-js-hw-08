@@ -1,4 +1,4 @@
-// Перший варіант, не розумію чого не працює
+// Перший варіант, не розумію чому не виводить консоль лог при сабміті
 
 import throttle from 'lodash.throttle';
 
@@ -19,7 +19,13 @@ refs.feedbackForm.addEventListener('input', throttle(onFormInput, 500));
 loadFormData();
 
 function onFormInput(evt) {
-  formData = JSON.parse(localStorage.getItem(STORAGE_KEY));
+  const savedMessage = localStorage.getItem(STORAGE_KEY);
+  if (savedMessage) {
+    formData = JSON.parse(savedMessage);
+  } else {
+    formData = {};
+  }
+  //   console.log(formData);
   formData[evt.target.name] = evt.target.value;
   const message = JSON.stringify(formData);
   localStorage.setItem(STORAGE_KEY, message);
@@ -34,8 +40,9 @@ function onFormSubmit(evt) {
 
 function loadFormData() {
   const savedMessage = localStorage.getItem(STORAGE_KEY);
-  const data = JSON.parse(savedMessage);
+
   if (savedMessage) {
+    const data = JSON.parse(savedMessage);
     refs.emailInput.value = data.email;
     refs.messageInput.value = data.message;
   }
