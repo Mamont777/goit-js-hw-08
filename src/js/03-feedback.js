@@ -28,7 +28,6 @@
 //   evt.currentTarget.reset();
 //   localStorage.removeItem(STORAGE_KEY);
 //   console.log(JSON.parse(localStorage.getItem(STORAGE_KEY)));
-
 // }
 
 // function loadFormData() {
@@ -41,7 +40,7 @@
 //   }
 // }
 
-// Другий варіант
+// Другий варіант Не розумію чому не працює log onFormSubmit
 
 import throttle from 'lodash.throttle';
 
@@ -70,8 +69,11 @@ function onFormSubmit(evt) {
   evt.preventDefault();
   evt.target.reset();
   localStorage.removeItem(STORAGE_KEY);
-  const { email, message } = evt.currentTarget.elements;
-  console.log({ email: email.value, message: message.value });
+  const state = {
+    email: refs.emailInput.value,
+    message: refs.messageInput.value,
+  };
+  console.log(state);
 }
 
 function loadFormData() {
